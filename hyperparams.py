@@ -58,7 +58,7 @@ class Hyperparams:
 
     # training scheme
     lr = 0.001 # Initial learning rate.
-    logdir = "../savedir/logdir/LJ01"
-    sampledir = '../savedir/samples'
+    logdir = "..\\logdirs-mel2world\\logdir\\LJ01"
+    sampledir = '..\\logdirs-mel2world\\samples'
     B = 32 # batch size
     num_iterations =10# 2000000

@@ -54,7 +54,7 @@ class Hyperparams:
     #portugues falta acento no a :"abcdefghijklmnopqrstuvwxyzçãõâôêíîúûñáéó.?"
     phoneme_vocab = "ˈoʧi.tulʊʤɪpaʒnsdk̃eɾvmzgɐ͂ɛxfbɣ,_ɔXqɲʃʎĩẽõhũŋcrɳ E"
     max_N = 180 # Maximum number of characters. default:180
-    max_T = 1010 # Maximum number of mel frames. default:210
+    max_T = 3010 # Maximum number of mel frames. default:210
 
     # training scheme
     lr = 0.001 # Initial learning rate.

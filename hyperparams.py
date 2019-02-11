@@ -37,11 +37,11 @@ class Hyperparams:
     attention_win_size = 3
 
     # data
-    data = "/home/edresson/Projetos-PTI/TCC/text-dataset/App/Base/TTS-Portuguese/"
-    data_dir = os.path.join(data,'wavs')
+    data = "..\\Datasets\\TTS-Portuguese-Corpus"
+    data_dir = os.path.join(data,'wavs/')
     # data = "/data/private/voice/kate"
     language = 'pt' # or 'eng'
-    phoneme = True
+    phoneme = False
     if phoneme == False and language == 'pt':
         test_data = 'phonetically-balanced-sentences.txt'
     elif phoneme == True and language == 'pt':
@@ -58,7 +58,7 @@ class Hyperparams:
 
     # training scheme
     lr = 0.001 # Initial learning rate.
-    logdir = "..\\logdirs-mel2world\\logdir\\LJ01"
-    sampledir = '..\\logdirs-mel2world\\samples'
-    B = 32 # batch size
-    num_iterations =10# 2000000
+    logdir = "..\\logdirs-text2world\\logdir\\LJ01"
+    sampledir = '..\\logdirs-text2world\\samples'
+    B = 5 # batch size
+    num_iterations =2000000

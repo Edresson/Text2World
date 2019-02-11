@@ -34,7 +34,7 @@ def synthesize():
         # Restore parameters
         var_list = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, 'Text2World')
         saver1 = tf.train.Saver(var_list=var_list)
-        saver1.restore(sess, tf.train.latest_checkpoint(hp.logdir + "-3"))
+        saver1.restore(sess, tf.train.latest_checkpoint(hp.logdir + "-1"))
 
         # Feed Forward
         ## mel

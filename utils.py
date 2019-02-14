@@ -30,8 +30,19 @@ import soundfile as sf
 import pyworld as vocoder
 
 int16_max = 32768.0
-speed = 0.6
-frame_period = 7.1
+speed = 1
+frame_period = 8
+f0_floor = 71.0
+f0_ceil = 800.0
+
+def normalize(x,max,min,min_inter=0.1,max_inter=0.9):
+    return (max_inter-min_inter)*(x-min)/(max-min)+min_inter
+
+    
+
+def denormalize(x,max,min,min_inter=0.1,max_inter=0.9):
+    return (x-min_inter)/(max_inter-min_inter)*(max-min)+min
+
 
 def f0_normalize(x):
 	return np.log(np.where(x == 0.0, 1.0, x)).astype(np.float32)
@@ -76,7 +87,7 @@ def tensor_to_world_features(tensor):
 def wav2world(wavfile):
     wav, fs = sf.read(wavfile)
     #f0,sp,ap=vocoder.wav2world(wav,fs , hp.n_fft, ap_depth=hp.num_bap)
-    _f0_h, t_h = vocoder.dio(wav, fs, f0_floor=50.0, f0_ceil=600.0,
+    _f0_h, t_h = vocoder.dio(wav, fs, f0_floor=f0_floor, f0_ceil=f0_ceil,
                 channels_in_octave=2,
                 frame_period=frame_period,
                 speed=speed)
@@ -88,16 +99,25 @@ def wav2world(wavfile):
     lf0 = f0_normalize(f0)
     mgc = sp_normalize(sp)
     bap = ap_normalize(ap)
+    f_normalize = np.vectorize(normalize)
+    lf0= f_normalize(lf0,hp.lf0_max,hp.lf0_min)
+    mgc= f_normalize(mgc,hp.mgc_max,hp.mgc_min)
+    bap= f_normalize(bap,hp.bap_max,hp.bap_min)
+    
     return np.array(world_features_to_one_tensor(lf0,mgc,bap))
 
 
 def world2wav(lf0, mgc, bap):
+        f_denormalize = np.vectorize(denormalize)
+        lf0= f_denormalize(lf0,hp.lf0_max,hp.lf0_min)
+        mgc= f_denormalize(mgc,hp.mgc_max,hp.mgc_min)
+        bap= f_denormalize(bap,hp.bap_max,hp.bap_min)
 	lf0 = np.where(lf0 < 1, 0.0, lf0)
 	f0 = f0_denormalize(lf0)
 	sp = sp_denormalize(mgc)
 	ap = ap_denormalize(bap, lf0)
 	print('features denomalize',lf0.shape,sp.shape,ap.shape)
-	wav = vocoder.synthesize(f0, sp, ap,hp.sr_dataset,vocoder.default_frame_period)
+	wav = vocoder.synthesize(f0, sp, ap,hp.sr_dataset,frame_period)
 	return wav
 
 

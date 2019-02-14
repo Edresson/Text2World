@@ -25,6 +25,18 @@ class Hyperparams:
     num_lf0 = 1
     num_mgc = 60
     mcep_alpha=0.77 #0.58(16k) 0.65(22050) 0.76(44100)  0.77(48k)
+    lf0_min= 0.0
+    lf0_max= 7
+    mgc_min= -9
+    mgc_max=  8
+    bap_min= -63
+    bap_max = 0
+    '''lf0_min= 0.0
+    lf0_max= 6.67782
+    mgc_min= -9.21034
+    mgc_max=8.42621
+    bap_min= -62.8978
+    bap_max = 0'''
 
     # Model
     r = 4 # Reduction factor. Do not change this.
@@ -37,7 +49,7 @@ class Hyperparams:
     attention_win_size = 3
 
     # data
-    data = "..\\Datasets\\TTS-Portuguese-Corpus"
+    data = "/home/edresson/Projetos-PTI/TCC/text-dataset/App/Base/TTS-Portuguese"#"..\\Datasets\\TTS-Portuguese-Corpus"
     data_dir = os.path.join(data,'wavs/')
     # data = "/data/private/voice/kate"
     language = 'pt' # or 'eng'

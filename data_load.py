@@ -277,7 +277,7 @@ def get_batch():
                 
                 return fname, worlds
 
-            fname, world = tf.py_func(_load_spectrograms, [fpath], [tf.string, tf.float32, tf.float32])
+            fname, world = tf.py_func(_load_spectrograms, [fpath], [tf.string, tf.float32])
         else:
             print('Please run prepo.py !')
 

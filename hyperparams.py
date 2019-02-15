@@ -49,7 +49,7 @@ class Hyperparams:
     attention_win_size = 3
 
     # data
-    data = "/home/edresson/Projetos-PTI/TCC/text-dataset/App/Base/TTS-Portuguese"#"..\\Datasets\\TTS-Portuguese-Corpus"
+    data = "..\\Datasets\\TTS-Portuguese-Corpus"
     data_dir = os.path.join(data,'wavs/')
     # data = "/data/private/voice/kate"
     language = 'pt' # or 'eng'

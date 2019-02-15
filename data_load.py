@@ -273,7 +273,7 @@ def get_batch():
                 fname = os.path.basename(fpath)
                 fname = fname.decode("utf8")
                 world = "worlds/{}".format(fname.replace("wav", "npy"))
-                worlds = np.load(world).astype(tf.float32)
+                worlds = np.load(world).astype(float)
                 
                 return fname, worlds
 

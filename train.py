@@ -81,7 +81,7 @@ class Graph:
                 self.loss_att /= self.mask_sum
 
                 # total loss
-                self.loss = self.loss_worlds + self.loss_bd1 + self.loss_att
+                self.loss = self.loss_worlds + self.loss_bd1 #+ self.loss_att
 
                 tf.summary.scalar('train/loss_worlds', self.loss_worlds)
                 tf.summary.scalar('train/loss_bd1', self.loss_bd1)

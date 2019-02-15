@@ -195,7 +195,7 @@ def AudioDec(R, training=True):
                         scope="C_{}".format(i)); i += 1
     # mel_hats
     logits = conv1d(tensor,
-                    filters=hp.n_mels,
+                    filters=hp.num_bap+hp.num_lf0+hp.num_mgc,
                     size=1,
                     rate=1,
                     padding="CAUSAL",

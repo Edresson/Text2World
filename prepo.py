@@ -58,9 +58,12 @@ if hp.phoneme == True:
         texts_to_phonemes(fpaths,texts)
 
 for fpath in tqdm.tqdm(fpaths):
-
-    if not os.path.exists("worlds"): os.mkdir("worlds")
-    world=wav2world(os.path.join(hp.data_dir,fpath))
-    '''num_padding = mel.shape[0]*8 - world.shape[0] 
-    world = np.pad(world, [[0, num_padding], [0, 0]], mode="constant")'''
-    np.save("worlds/{}".format(data_list[i].replace("wav", "npy")), world)
+    try:
+        if not os.path.exists("worlds"): os.mkdir("worlds")
+        world=wav2world(os.path.join(hp.data_dir,fpath))
+        '''num_padding = mel.shape[0]*8 - world.shape[0] 
+        world = np.pad(world, [[0, num_padding], [0, 0]], mode="constant")'''
+        np.save("worlds/{}".format(data_list[i].replace("wav", "npy")), world)
+    except:
+        print('arquivo: ',fpath,' ignorado')
+        continue

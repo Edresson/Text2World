@@ -273,9 +273,9 @@ def get_batch():
                 fname = os.path.basename(fpath)
                 fname = fname.decode("utf8")
                 world = "worlds/{}".format(fname.replace("wav", "npy"))
-                worlds = np.load(world).astype(float)
+                worlds = np.load(world)
                 
-                return fname, worlds
+                return fname, np.float32(worlds)
 
             fname, world = tf.py_func(_load_spectrograms, [fpath], [tf.string, tf.float32])
         else:

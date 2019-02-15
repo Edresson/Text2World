@@ -39,7 +39,7 @@ class Graph:
             self.prev_max_attentions = tf.placeholder(tf.int32, shape=(None,))
             self.gts = tf.convert_to_tensor(guided_attention())
 
-        if not training:
+        if not training or training:
             with tf.variable_scope("Text2World"):
                 # Get S or decoder inputs. (B, 8*T/r, num_lf0+num_mgc+num_bap)
                 self.S = tf.concat((tf.zeros_like(self.worlds[:, :1, :]), self.worlds[:, :-1, :]), 1)

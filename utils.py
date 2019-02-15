@@ -108,10 +108,10 @@ def wav2world(wavfile):
 
 
 def world2wav(lf0, mgc, bap):
-        f_denormalize = np.vectorize(denormalize)
-        lf0= f_denormalize(lf0,hp.lf0_max,hp.lf0_min)
-        mgc= f_denormalize(mgc,hp.mgc_max,hp.mgc_min)
-        bap= f_denormalize(bap,hp.bap_max,hp.bap_min)
+	f_denormalize = np.vectorize(denormalize)
+	lf0= f_denormalize(lf0,hp.lf0_max,hp.lf0_min)
+	mgc= f_denormalize(mgc,hp.mgc_max,hp.mgc_min)
+	bap= f_denormalize(bap,hp.bap_max,hp.bap_min)
 	lf0 = np.where(lf0 < 1, 0.0, lf0)
 	f0 = f0_denormalize(lf0)
 	sp = sp_denormalize(mgc)

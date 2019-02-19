@@ -297,5 +297,5 @@ def get_batch():
                                             capacity=hp.B*4,
                                             dynamic_pad=True)
 
-    return texts, worlds,worlds_wsr fnames, num_batch
+    return texts, worlds,worlds_wsr, fnames, num_batch
 

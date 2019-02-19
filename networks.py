@@ -260,9 +260,9 @@ def WSRN(Y, training=True):
                         dropout_rate=hp.dropout_rate,
                         training=training,
                         scope="HC_{}".format(i)); i += 1
-    # -> (B, T, 1+n_fft/2)
+    # -> (B, T,hp.num_bap+hp.num_lf0+hp.num_mgc)
     tensor = conv1d(tensor,
-                    filters=1+hp.n_fft//2,
+                    filters=hp.num_bap+hp.num_lf0+hp.num_mgc,
                     size=1,
                     rate=1,
                     dropout_rate=hp.dropout_rate,

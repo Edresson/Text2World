@@ -30,10 +30,10 @@ import soundfile as sf
 import pyworld as vocoder
 
 int16_max = 32768.0
-speed = 1
-frame_period = 8
-f0_floor = 71.0
-f0_ceil = 800.0
+speed = hp.speed
+frame_period = hp.frame_period
+f0_floor = hp.f0_floor
+f0_ceil = hp.f0_ceil
 
 def normalize(x,max,min,min_inter=0.1,max_inter=0.9):
     return (max_inter-min_inter)*(x-min)/(max-min)+min_inter

@@ -31,6 +31,13 @@ class Hyperparams:
     mgc_max=  8
     bap_min= -63
     bap_max = 0
+    speed = 1
+    frame_period = 20
+    frame_period_WSRN = 5
+    
+    f0_floor = 71.0
+    f0_ceil = 800.0
+    
     '''lf0_min= 0.0
     lf0_max= 6.67782
     mgc_min= -9.21034

@@ -102,7 +102,7 @@ class Graph:
                 self.loss_WSR = tf.reduce_mean(tf.abs(self.Z - self.worlds_WSR))
 
                 # world binary divergence loss
-                self.loss_bd2 = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(logits=self.Z_logits, labels=self.mags))
+                self.loss_bd2 = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(logits=self.Z_logits, labels=self.worlds_WSR))
 
                 # total loss
                 self.loss = self.loss_WSR + self.loss_bd2

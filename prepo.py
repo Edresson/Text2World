@@ -61,10 +61,11 @@ if hp.phoneme == True:
 for fpath in tqdm.tqdm(fpaths):
     try:    
         if not os.path.exists("worlds"): os.mkdir("worlds")
-        world=wav2world(fpath)
-        '''num_padding = mel.shape[0]*8 - world.shape[0] 
-        world = np.pad(world, [[0, num_padding], [0, 0]], mode="constant")'''
+        if not os.path.exists("worlds_wsr"): os.mkdir("worlds_wsr")
+        world=wav2world(fpath,hp.frame_period)
+        world_wsr=wav2world(fpath,hp.frame_period_WSRN)
         np.save("worlds/{}".format( os.path.basename(fpath).replace("wav", "npy")), world)
+        np.save("worlds_wsr/{}".format( os.path.basename(fpath).replace("wav", "npy")), world_wsr)
     except:    
-        print('arquivo: ',fpath,' ignorado')
+        print('file: ',fpath,' ignored')
         continue

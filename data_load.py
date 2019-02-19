@@ -274,10 +274,11 @@ def get_batch():
                 fname = fname.decode("utf8")
                 world = "worlds/{}".format(fname.replace("wav", "npy"))
                 worlds = np.load(world)
-                
-                return fname, np.float32(worlds)
+                world_wsr = "worlds_wsr/{}".format(fname.replace("wav", "npy"))
+                worlds_wsr = np.load(world_wsr)
+                return fname, np.float32(worlds),np.float32(worlds_wsr)
 
-            fname, world = tf.py_func(_load_spectrograms, [fpath], [tf.string, tf.float32])
+            fname, world,worl_wsr= tf.py_func(_load_spectrograms, [fpath], [tf.string, tf.float32,tf.float32])
         else:
             print('Please run prepo.py !')
 
@@ -287,14 +288,14 @@ def get_batch():
         world.set_shape((None, hp.num_bap+hp.num_lf0+hp.num_mgc))
 
         # Batching
-        _, (texts, worlds, fnames) = tf.contrib.training.bucket_by_sequence_length(
+        _, (texts, worlds,worlds_wsr fnames) = tf.contrib.training.bucket_by_sequence_length(
                                             input_length=text_length,
-                                            tensors=[text, world, fname],
+                                            tensors=[text, world, world_wsr, fname],
                                             batch_size=hp.B,
                                             bucket_boundaries=[i for i in range(minlen + 1, maxlen - 1, 20)],
                                             num_threads=8,
                                             capacity=hp.B*4,
                                             dynamic_pad=True)
 
-    return texts, worlds, fnames, num_batch
+    return texts, worlds,worlds_wsr fnames, num_batch
 

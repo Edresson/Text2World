@@ -7,14 +7,14 @@ from tqdm import tqdm
 from data_load import get_batch, load_vocab
 from hyperparams import Hyperparams as hp
 from modules import *
-from networks import TextEnc, AudioEnc, AudioDec, Attention
+from networks import TextEnc, AudioEnc, AudioDec, Attention,WSRN
 import tensorflow as tf
 from utils import *
 import sys
 
 
 class Graph:
-    def __init__(self, mode="train"):
+    def __init__(self, num=1,mode="train"):
         '''
         Args:
           mode: Either "train" or "synthesize".
@@ -30,7 +30,7 @@ class Graph:
         ## L: Text. (B, N), int32
         ## world: World Vocoder concatenate tensor.(B, 8*T/r, num_lf0+num_mgc+num_bap) float32
         if mode=="train":
-            self.L, self.worlds, self.fnames, self.num_batch = get_batch()
+            self.L, self.worlds,self.worlds_WSR, self.fnames, self.num_batch = get_batch()
             self.prev_max_attentions = tf.ones(shape=(hp.B,), dtype=tf.int32)
             self.gts = tf.convert_to_tensor(guided_attention())
         else:  # Synthesize
@@ -39,7 +39,7 @@ class Graph:
             self.prev_max_attentions = tf.placeholder(tf.int32, shape=(None,))
             self.gts = tf.convert_to_tensor(guided_attention())
 
-        if not training or training:
+        if num==1 or (not training):
             with tf.variable_scope("Text2World"):
                 # Get S or decoder inputs. (B, 8*T/r, num_lf0+num_mgc+num_bap)
                 self.S = tf.concat((tf.zeros_like(self.worlds[:, :1, :]), self.worlds[:, :-1, :]), 1)
@@ -60,13 +60,22 @@ class Graph:
                                                                              prev_max_attentions=self.prev_max_attentions)
                 with tf.variable_scope("AudioDec"):
                     self.Y_logits, self.Y = AudioDec(self.R, training=training) # (B, T/r, num_lf0+num_mgc+num_bap)
-        
+        else:  # num==2 & training. Note that during training,
+            with tf.variable_scope("WSRN"):
+                self.Z_logits, self.Z = WSRN(self.worlds, training=training)
 
+        if not training:
+            # During inference, the predicted melspectrogram values are fed.
+            with tf.variable_scope("WSRN"):
+                self.Z_logits, self.Z = WSRN(self.Y, training=training)
 
         with tf.variable_scope("gs"):
             self.global_step = tf.Variable(0, name='global_step', trainable=False)
 
+
+
         if training:
+            if num==1: # Text2World
                 # world L1 loss
                 self.loss_worlds = tf.reduce_mean(tf.abs(self.Y - self.worlds))
 
@@ -88,28 +97,40 @@ class Graph:
                 tf.summary.scalar('train/loss_att', self.loss_att)
                 tf.summary.image('train/world_gt', tf.expand_dims(tf.transpose(self.worlds[:1], [0, 2, 1]), -1))
                 tf.summary.image('train/world_hat', tf.expand_dims(tf.transpose(self.Y[:1], [0, 2, 1]), -1))
+            else:#WSRN
+                # world L1 loss
+                self.loss_WSR = tf.reduce_mean(tf.abs(self.Z - self.worlds_WSR))
 
-                # Training Scheme
-                self.lr = learning_rate_decay(hp.lr, self.global_step)
-                self.optimizer = tf.train.AdamOptimizer(learning_rate=self.lr)
-                tf.summary.scalar("lr", self.lr)
+                # world binary divergence loss
+                self.loss_bd2 = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(logits=self.Z_logits, labels=self.mags))
 
-                ## gradient clipping
-                self.gvs = self.optimizer.compute_gradients(self.loss)
-                self.clipped = []
-                for grad, var in self.gvs:
-                    grad = tf.clip_by_value(grad, -1., 1.)
-                    self.clipped.append((grad, var))
-                    self.train_op = self.optimizer.apply_gradients(self.clipped, global_step=self.global_step)
+                # total loss
+                self.loss = self.loss_WSR + self.loss_bd2
 
-                # Summary
-                self.merged = tf.summary.merge_all()
+                tf.summary.scalar('train/loss_mags', self.loss_WSR)
+                tf.summary.scalar('train/loss_bd2', self.loss_bd2)
+
+            # Training Scheme
+            self.lr = learning_rate_decay(hp.lr, self.global_step)
+            self.optimizer = tf.train.AdamOptimizer(learning_rate=self.lr)
+            tf.summary.scalar("lr", self.lr)
+
+            ## gradient clipping
+            self.gvs = self.optimizer.compute_gradients(self.loss)
+            self.clipped = []
+            for grad, var in self.gvs:
+                grad = tf.clip_by_value(grad, -1., 1.)
+                self.clipped.append((grad, var))
+                self.train_op = self.optimizer.apply_gradients(self.clipped, global_step=self.global_step)
+
+            # Summary
+            self.merged = tf.summary.merge_all()
 
 
 if __name__ == '__main__':
     num = int(sys.argv[1])
 
-    g = Graph();print("Training Graph loaded")
+    g = Graph(num=num);print("Training Graph loaded")
 
     logdir = hp.logdir + "-" + str(num)
     sv = tf.train.Supervisor(logdir=logdir, save_model_secs=0, global_step=g.global_step)

@@ -68,7 +68,7 @@ def TextEnc(L, training=True):
 def AudioEnc(S, training=True):
     '''
     Args:
-      S: melspectrogram. (B, 8*T/r, n_mels)
+      S: World features. (B, 8*T/r, num_lf0+num_mgc+num_bap)
 
     Returns
       Q: Queries. (B, 8*T/r, d)
@@ -155,7 +155,7 @@ def AudioDec(R, training=True):
       R: [Context Vectors; Q]. (B, T/r, 2d)
 
     Returns:
-      Y: Melspectrogram predictions. (B, T/r, n_mels)
+      Y: Word features predictions. (B, T/r, num_lf0+num_mgc+num_bap)
     '''
 
     i = 1
@@ -205,3 +205,83 @@ def AudioDec(R, training=True):
     Y = tf.nn.sigmoid(logits) # mel_hats
 
     return logits, Y
+
+def WSRN(Y, training=True):
+    '''
+    Args:
+      Y: World feature Predictions. (B, T/r, num_lf0+num_mgc+num_bap)
+
+    Returns:
+      Z: Spectrogram Predictions. (B, T, num_lf0+num_mgc+num_bap)
+    '''
+
+    i = 1 # number of layers
+
+    # -> (B, T/r, c)
+    tensor = conv1d(Y,
+                    filters=hp.c,
+                    size=1,
+                    rate=1,
+                    dropout_rate=hp.dropout_rate,
+                    training=training,
+                    scope="C_{}".format(i)); i += 1
+    for j in range(2):
+        tensor = hc(tensor,
+                      size=3,
+                      rate=3**j,
+                      dropout_rate=hp.dropout_rate,
+                      training=training,
+                      scope="HC_{}".format(i)); i += 1
+    for _ in range(2):
+        # -> (B, T/2, c) -> (B, T, c)
+        tensor = conv1d_transpose(tensor,
+                                  scope="D_{}".format(i),
+                                  dropout_rate=hp.dropout_rate,
+                                  training=training,); i += 1
+        for j in range(2):
+            tensor = hc(tensor,
+                            size=3,
+                            rate=3**j,
+                            dropout_rate=hp.dropout_rate,
+                            training=training,
+                            scope="HC_{}".format(i)); i += 1
+    # -> (B, T, 2*c)
+    tensor = conv1d(tensor,
+                    filters=2*hp.c,
+                    size=1,
+                    rate=1,
+                    dropout_rate=hp.dropout_rate,
+                    training=training,
+                    scope="C_{}".format(i)); i += 1
+    for _ in range(2):
+        tensor = hc(tensor,
+                        size=3,
+                        rate=1,
+                        dropout_rate=hp.dropout_rate,
+                        training=training,
+                        scope="HC_{}".format(i)); i += 1
+    # -> (B, T, 1+n_fft/2)
+    tensor = conv1d(tensor,
+                    filters=1+hp.n_fft//2,
+                    size=1,
+                    rate=1,
+                    dropout_rate=hp.dropout_rate,
+                    training=training,
+                    scope="C_{}".format(i)); i += 1
+
+    for _ in range(2):
+        tensor = conv1d(tensor,
+                        size=1,
+                        rate=1,
+                        dropout_rate=hp.dropout_rate,
+                        activation_fn=tf.nn.relu,
+                        training=training,
+                        scope="C_{}".format(i)); i += 1
+    logits = conv1d(tensor,
+               size=1,
+               rate=1,
+               dropout_rate=hp.dropout_rate,
+               training=training,
+               scope="C_{}".format(i))
+    Z = tf.nn.sigmoid(logits)
+    return logits, Z

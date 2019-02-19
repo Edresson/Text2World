@@ -21,6 +21,7 @@ class Hyperparams:
     ref_db = 20
 
     #world features
+    r = 4 # Reduction factor. Do not change this.
     num_bap = 5
     num_lf0 = 1
     num_mgc = 60
@@ -33,7 +34,7 @@ class Hyperparams:
     bap_max = 0
     speed = 1
     frame_period = 20
-    frame_period_WSRN = 5
+    frame_period_WSRN = frame_period/r # 5
     
     f0_floor = 71.0
     f0_ceil = 800.0
@@ -46,7 +47,6 @@ class Hyperparams:
     bap_max = 0'''
 
     # Model
-    r = 4 # Reduction factor. Do not change this.
     dropout_rate = 0.05
     vocoder = 'RTISI-LA' # or 
     #vocoder = 'griffin_lim'

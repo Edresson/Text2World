@@ -31,7 +31,6 @@ import pyworld as vocoder
 
 int16_max = 32768.0
 speed = hp.speed
-frame_period = hp.frame_period
 f0_floor = hp.f0_floor
 f0_ceil = hp.f0_ceil
 
@@ -84,7 +83,7 @@ def tensor_to_world_features(tensor):
         
     return np.array(f0),np.array(sp),np.array(ap)
 
-def wav2world(wavfile):
+def wav2world(wavfile,frame_period):
     wav, fs = sf.read(wavfile)
     #f0,sp,ap=vocoder.wav2world(wav,fs , hp.n_fft, ap_depth=hp.num_bap)
     _f0_h, t_h = vocoder.dio(wav, fs, f0_floor=f0_floor, f0_ceil=f0_ceil,
@@ -107,7 +106,7 @@ def wav2world(wavfile):
     return np.array(world_features_to_one_tensor(lf0,mgc,bap))
 
 
-def world2wav(lf0, mgc, bap):
+def world2wav(lf0, mgc, bap,frame_period):
 	f_denormalize = np.vectorize(denormalize)
 	lf0= f_denormalize(lf0,hp.lf0_max,hp.lf0_min)
 	mgc= f_denormalize(mgc,hp.mgc_max,hp.mgc_min)

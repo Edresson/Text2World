@@ -288,7 +288,7 @@ def get_batch():
         world.set_shape((None, hp.num_bap+hp.num_lf0+hp.num_mgc))
 
         # Batching
-        _, (texts, worlds,worlds_wsr fnames) = tf.contrib.training.bucket_by_sequence_length(
+        _, (texts, worlds,worlds_wsr, fnames) = tf.contrib.training.bucket_by_sequence_length(
                                             input_length=text_length,
                                             tensors=[text, world, world_wsr, fname],
                                             batch_size=hp.B,

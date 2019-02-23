@@ -36,11 +36,11 @@ def synthesize():
         saver1 = tf.train.Saver(var_list=var_list)
         saver1.restore(sess, tf.train.latest_checkpoint(hp.logdir + "-1"))
 
-        var_list = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, 'WSRN') + \
+        '''var_list = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, 'WSRN') + \
                    tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, 'gs')
         saver2 = tf.train.Saver(var_list=var_list)
         saver2.restore(sess, tf.train.latest_checkpoint(hp.logdir + "-2"))
-        print("WSRN Restored!")
+        print("WSRN Restored!")'''
 
 
         # Feed Forward
@@ -65,7 +65,7 @@ def synthesize():
             sf.write(hp.sampledir + "/{}.wav".format(i+1), wav,hp.sr_dataset)
         
 
-        # Get magnitude
+        '''# Get magnitude
         Z = sess.run(g.Z, {g.Y: Y})
         # Generate wav files
         if not os.path.exists(hp.sampledir+'_wsrn'): os.makedirs(hp.sampledir+'_wsrn')
@@ -73,7 +73,7 @@ def synthesize():
             print("Working on file", i+1)
             lf0,mgc,bap = tensor_to_world_features(world_tensor)
             wav = world2wav(lf0, mgc, bap,hp.frame_period_WSRN)
-            sf.write(hp.sampledir+'_wsrn' + "/{}.wav".format(i+1), wav,hp.sr_dataset)
+            sf.write(hp.sampledir+'_wsrn' + "/{}.wav".format(i+1), wav,hp.sr_dataset)'''
       
 
 if __name__ == '__main__':

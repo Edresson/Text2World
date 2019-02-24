@@ -98,19 +98,19 @@ def wav2world(wavfile,frame_period):
     lf0 = f0_normalize(f0)
     mgc = sp_normalize(sp)
     bap = ap_normalize(ap)
-    f_normalize = np.vectorize(normalize)
+    '''f_normalize = np.vectorize(normalize)
     lf0= f_normalize(lf0,hp.lf0_max,hp.lf0_min)
     mgc= f_normalize(mgc,hp.mgc_max,hp.mgc_min)
-    bap= f_normalize(bap,hp.bap_max,hp.bap_min)
+    bap= f_normalize(bap,hp.bap_max,hp.bap_min)'''
     
     return np.array(world_features_to_one_tensor(lf0,mgc,bap))
 
 
 def world2wav(lf0, mgc, bap,frame_period):
-	f_denormalize = np.vectorize(denormalize)
+	'''f_denormalize = np.vectorize(denormalize)
 	lf0= f_denormalize(lf0,hp.lf0_max,hp.lf0_min)
 	mgc= f_denormalize(mgc,hp.mgc_max,hp.mgc_min)
-	bap= f_denormalize(bap,hp.bap_max,hp.bap_min)
+	bap= f_denormalize(bap,hp.bap_max,hp.bap_min)'''
 	lf0 = np.where(lf0 < 1, 0.0, lf0)
 	f0 = f0_denormalize(lf0)
 	sp = sp_denormalize(mgc)

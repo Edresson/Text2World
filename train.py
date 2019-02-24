@@ -80,7 +80,7 @@ class Graph:
                 self.loss_worlds = tf.reduce_mean(tf.abs(self.Y - self.worlds))
 
                 # world binary divergence loss
-                self.loss_bd1 = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(logits=self.Y_logits, labels=self.worlds))
+                #self.loss_bd1 = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(logits=self.Y_logits, labels=self.worlds))
 
                 # guided_attention loss
                 self.A = tf.pad(self.alignments, [(0, 0), (0, hp.max_N), (0, hp.max_T)], mode="CONSTANT", constant_values=-1.)[:, :hp.max_N, :hp.max_T]
@@ -90,10 +90,10 @@ class Graph:
                 self.loss_att /= self.mask_sum
 
                 # total loss
-                self.loss = self.loss_worlds + self.loss_bd1 + self.loss_att
+                self.loss = self.loss_worlds +  self.loss_att#self.loss_bd1 +
 
                 tf.summary.scalar('train/loss_worlds', self.loss_worlds)
-                tf.summary.scalar('train/loss_bd1', self.loss_bd1)
+                #tf.summary.scalar('train/loss_bd1', self.loss_bd1)
                 tf.summary.scalar('train/loss_att', self.loss_att)
                 tf.summary.image('train/world_gt', tf.expand_dims(tf.transpose(self.worlds[:1], [0, 2, 1]), -1))
                 tf.summary.image('train/world_hat', tf.expand_dims(tf.transpose(self.Y[:1], [0, 2, 1]), -1))
@@ -102,13 +102,13 @@ class Graph:
                 self.loss_WSR = tf.reduce_mean(tf.abs(self.Z - self.worlds_WSR))
 
                 # world binary divergence loss
-                self.loss_bd2 = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(logits=self.Z_logits, labels=self.worlds_WSR))
+                #self.loss_bd2 = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(logits=self.Z_logits, labels=self.worlds_WSR))
 
                 # total loss
-                self.loss = self.loss_WSR + self.loss_bd2
+                self.loss = self.loss_WSR #+ self.loss_bd2
 
                 tf.summary.scalar('train/loss_mags', self.loss_WSR)
-                tf.summary.scalar('train/loss_bd2', self.loss_bd2)
+                #tf.summary.scalar('train/loss_bd2', self.loss_bd2)
 
             # Training Scheme
             self.lr = learning_rate_decay(hp.lr, self.global_step)

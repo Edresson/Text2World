@@ -21,7 +21,7 @@ class Hyperparams:
     ref_db = 20
 
     #world features
-    r = 4 # Reduction factor. Do not change this.
+    r = 6 # Reduction factor. Do not change this.
     num_bap = 5
     num_lf0 = 1
     num_mgc = 60
@@ -60,7 +60,7 @@ class Hyperparams:
     data_dir = os.path.join(data,'wavs/')
     # data = "/data/private/voice/kate"
     language = 'pt' # or 'eng'
-    phoneme = False
+    phoneme = True
     if phoneme == False and language == 'pt':
         test_data = 'phonetically-balanced-sentences.txt'
     elif phoneme == True and language == 'pt':

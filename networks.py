@@ -232,7 +232,7 @@ def WSRN(Y, training=True):
                       dropout_rate=hp.dropout_rate,
                       training=training,
                       scope="HC_{}".format(i)); i += 1
-    for _ in range(2):
+    for _ in range(3):
         # -> (B, T/2, c) -> (B, T, c)
         tensor = conv1d_transpose(tensor,
                                   scope="D_{}".format(i),
@@ -245,6 +245,7 @@ def WSRN(Y, training=True):
                             dropout_rate=hp.dropout_rate,
                             training=training,
                             scope="HC_{}".format(i)); i += 1
+            
     # -> (B, T, 2*c)
     tensor = conv1d(tensor,
                     filters=2*hp.c,

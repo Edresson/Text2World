@@ -202,8 +202,8 @@ def AudioDec(R, training=True):
                     dropout_rate=hp.dropout_rate,
                     training=training,
                     scope="C_{}".format(i)); i += 1
-    Y = tf.nn.sigmoid(logits) # mel_hats
-
+    #Y = tf.nn.sigmoid(logits) # mel_hats
+    Y = tf.layers.Dense(units=hp.num_bap+hp.num_lf0+hp.num_mgc, activation=None, name='projection_linear')(logits)
     return logits, Y
 
 def WSRN(Y, training=True):
@@ -284,5 +284,7 @@ def WSRN(Y, training=True):
                dropout_rate=hp.dropout_rate,
                training=training,
                scope="C_{}".format(i))
-    Z = tf.nn.sigmoid(logits)
+    #Z = tf.nn.sigmoid(logits)
+    Z = tf.layers.Dense(units=hp.num_bap+hp.num_lf0+hp.num_mgc, activation=None, name='projection_linear')(logits)
+
     return logits, Z

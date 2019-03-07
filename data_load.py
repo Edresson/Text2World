@@ -267,7 +267,8 @@ def get_batch():
 
         # Parse
         text = tf.decode_raw(text, tf.int32)  # (None,)
-
+        for i in range(20):
+            print("teste")
         if hp.prepro:
             def _load_spectrograms(fpath):
                 fname = os.path.basename(fpath)
@@ -277,8 +278,9 @@ def get_batch():
                 world_wsr = "worlds_wsr/{}".format(fname.replace("wav", "npy"))
                 worlds_wsr = np.load(world_wsr)
                 num_padding = worlds.shape[0]*hp.r - worlds_wsr.shape[0] 
-                worlds_pad= np.pad(worlds_wsr, [[0, num_padding], [0, 0]], mode="constant")
-                return fname, np.float32(worlds),np.float32(worlds_pad)
+                worlds_wsr = np.pad(worlds_wsr, [[0, num_padding], [0, 0]], mode="constant")
+                print('shapes:',worlds.shape,worlds_wsr.shape)
+                return fname, np.float32(worlds),np.float32(worlds_wsr)
 
             fname, world,world_wsr= tf.py_func(_load_spectrograms, [fpath], [tf.string, tf.float32,tf.float32])
         else:

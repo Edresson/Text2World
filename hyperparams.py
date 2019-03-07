@@ -21,7 +21,7 @@ class Hyperparams:
     ref_db = 20
 
     #world features
-    r = 6 # Reduction factor. Do not change this.
+    r = 8 # Reduction factor. Do not change this.
     num_bap = 5
     num_lf0 = 1
     num_mgc = 60
@@ -33,7 +33,7 @@ class Hyperparams:
     bap_min= -63
     bap_max = 0
     speed = 1
-    frame_period = 20
+    frame_period = 40
     frame_period_WSRN = frame_period/r # 5
     
     f0_floor = 71.0

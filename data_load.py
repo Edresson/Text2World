@@ -10,7 +10,7 @@ import codecs
 import re
 import os
 import unicodedata
-
+import sys
 def load_vocab():
     if hp.phoneme == True:
         char2idx = {char: idx for idx, char in enumerate(hp.phoneme_vocab)}
@@ -279,6 +279,7 @@ def get_batch():
                 num_padding = worlds.shape[0]*hp.r - worlds_wsr.shape[0] 
                 worlds_wsr = np.pad(worlds_wsr, [[0, num_padding], [0, 0]], mode="constant")
                 print(worlds.shape,worlds_wsr.shape)
+                sys.exit()
                 return fname, np.float32(worlds),np.float32(worlds_wsr)
 
             fname, world,world_wsr= tf.py_func(_load_spectrograms, [fpath], [tf.string, tf.float32,tf.float32])

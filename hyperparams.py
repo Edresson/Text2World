@@ -60,7 +60,7 @@ class Hyperparams:
     data_dir = os.path.join(data,'wavs/')
     # data = "/data/private/voice/kate"
     language = 'pt' # or 'eng'
-    phoneme = True
+    phoneme = False
     if phoneme == False and language == 'pt':
         test_data = 'phonetically-balanced-sentences.txt'
     elif phoneme == True and language == 'pt':

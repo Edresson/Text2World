@@ -139,7 +139,7 @@ if __name__ == '__main__':
     with sv.managed_session() as sess:
         while 1:
             for _ in range(g.num_batch):
-                gs,loss, _ = sess.run([g.global_step,g.loss g.train_op])
+                gs,loss, _ = sess.run([g.global_step,g.loss, g.train_op])
 
                 # Write checkpoint files at every 1k steps
                 if gs % 1000 == 0:

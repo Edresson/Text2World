@@ -21,12 +21,12 @@ class Hyperparams:
     ref_db = 20
 
     #world features
-    r = 8 # Reduction factor. Do not change this.
+    r = 4 # Reduction factor. Do not change this.
     num_mgc = 60
     num_lf0 = 1
     num_vuv = 1
     num_bap = 5 # 1(16KHz, 22050Hz), 5(44.1KHz, 48KHz)
-    frame_period = 8 #15ms
+    frame_period = 12 #15ms
     sample_rate = 48000#22050 Hz (corresponding to ljspeech dataset)
     use_harvest = False 
     rescale_max = 0.999 #Rescaling value
@@ -71,7 +71,7 @@ class Hyperparams:
     #portugues falta acento no a :"abcdefghijklmnopqrstuvwxyzçãõâôêíîúûñáéó.?"
     phoneme_vocab = "ˈoʧi.tulʊʤɪpaʒnsdk̃eɾvmzgɐ͂ɛxfbɣ,_ɔXqɲʃʎĩẽõhũŋcrɳ E"
     max_N = 180 # Maximum number of characters. default:180
-    max_T = 503 # Maximum number of world frames. default:210
+    max_T = 1000 # Maximum number of world frames. default:210
 
     # training scheme
     lr = 0.001 # Initial learning rate.

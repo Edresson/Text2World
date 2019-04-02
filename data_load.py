@@ -267,8 +267,6 @@ def get_batch():
 
         # Parse
         text = tf.decode_raw(text, tf.int32)  # (None,)
-        for i in range(20):
-            print("teste")
         if hp.prepro:
             def _load_spectrograms(fpath):
                 fname = os.path.basename(fpath)

@@ -267,22 +267,22 @@ def get_batch():
 
         # Parse
         text = tf.decode_raw(text, tf.int32)  # (None,)
-        for i in range(20):
-            print("teste")
+    
         if hp.prepro:
             def _load_spectrograms(fpath):
                 fname = os.path.basename(fpath)
                 fname = fname.decode("utf8")
                 world = "worlds/{}".format(fname.replace("wav", "npy"))
                 worlds = np.load(world)
-                world_wsr = "worlds_wsr/{}".format(fname.replace("wav", "npy"))
-                worlds_wsr = np.load(world_wsr)
+                #world_wsr = "worlds_wsr/{}".format(fname.replace("wav", "npy"))
+                #worlds_wsr = np.load(world_wsr)
                 num_padding = worlds.shape[0]*hp.r - worlds_wsr.shape[0] 
-                worlds_wsr = np.pad(worlds_wsr, [[0, num_padding], [0, 0]], mode="constant")
-                print('shapes:',worlds.shape,worlds_wsr.shape)
-                return fname, np.float32(worlds),np.float32(worlds_wsr)
+                #worlds_wsr = np.pad(worlds_wsr, [[0, num_padding], [0, 0]], mode="constant")
+                #print('shapes:',worlds.shape,worlds_wsr.shape)
+                return fname, np.float32(worlds)#,np.float32(worlds_wsr)
 
-            fname, world,world_wsr= tf.py_func(_load_spectrograms, [fpath], [tf.string, tf.float32,tf.float32])
+            #fname, world,world_wsr= tf.py_func(_load_spectrograms, [fpath], [tf.string, tf.float32,tf.float32])
+            fname, world= tf.py_func(_load_spectrograms, [fpath], [tf.string, tf.float32])
         else:
             print('Please run prepo.py !')
 
@@ -290,11 +290,13 @@ def get_batch():
         fname.set_shape(())
         text.set_shape((None,))
         world.set_shape((None, hp.num_bap+hp.num_lf0+hp.num_mgc))
-        world_wsr.set_shape((None, hp.num_bap+hp.num_lf0+hp.num_mgc))
+        #world_wsr.set_shape((None, hp.num_bap+hp.num_lf0+hp.num_mgc))
         # Batching
-        _, (texts, worlds,worlds_wsr, fnames) = tf.contrib.training.bucket_by_sequence_length(
+        worlds_wsr = []
+        #_, (texts, worlds,worlds_wsr, fnames) = tf.contrib.training.bucket_by_sequence_length(
+        _, (texts, worlds, fnames) = tf.contrib.training.bucket_by_sequence_length(
                                             input_length=text_length,
-                                            tensors=[text, world, world_wsr, fname],
+                                            tensors=[text, world,fname],
                                             batch_size=hp.B,
                                             bucket_boundaries=[i for i in range(minlen + 1, maxlen - 1, 20)],
                                             num_threads=8,
@@ -302,4 +304,6 @@ def get_batch():
                                             dynamic_pad=True)
 
     return texts, worlds,worlds_wsr, fnames, num_batch
+    
+        
 

@@ -22,16 +22,16 @@ class Hyperparams:
 
     #world features
     r = 8 # Reduction factor. Do not change this.
-    num_mgc = 60,
-    num_lf0 = 1,
-    num_vuv = 1,
-    num_bap = 5, # 1(16KHz, 22050Hz), 5(44.1KHz, 48KHz)
-    frame_period = 8, #15ms
-    sample_rate = 48000, #22050 Hz (corresponding to ljspeech dataset)
-    use_harvest = False, 
-    rescale_max = 0.999, #Rescaling value
-    trim_silence = True, #Whether to clip silence in Audio (at beginning and end of audio only, not the middle)
-    frame_period = 40
+    num_mgc = 60
+    num_lf0 = 1
+    num_vuv = 1
+    num_bap = 5 # 1(16KHz, 22050Hz), 5(44.1KHz, 48KHz)
+    frame_period = 8 #15ms
+    sample_rate = 48000#22050 Hz (corresponding to ljspeech dataset)
+    use_harvest = False 
+    rescale_max = 0.999 #Rescaling value
+    trim_silence = True #Whether to clip silence in Audio (at beginning and end of audio only, not the middle)
+    #frame_period = 40
     frame_period_WSRN = frame_period/r # 5
     
     f0_floor = 71.0

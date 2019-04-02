@@ -35,7 +35,7 @@ class Graph:
             self.gts = tf.convert_to_tensor(guided_attention())
         else:  # Synthesize
             self.L = tf.placeholder(tf.int32, shape=(None, None))
-            self.worlds = tf.placeholder(tf.float32, shape=(None, None, hp.num_bap+hp.num_lf0+hp.num_mgc))
+            self.worlds = tf.placeholder(tf.float32, shape=(None, None, hp.num_bap+hp.num_lf0+hp.num_mgc+hp.num_vuv))
             self.prev_max_attentions = tf.placeholder(tf.int32, shape=(None,))
             self.gts = tf.convert_to_tensor(guided_attention())
 

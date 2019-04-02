@@ -289,8 +289,8 @@ def get_batch():
         # Add shape information
         fname.set_shape(())
         text.set_shape((None,))
-        world.set_shape((None, hp.num_bap+hp.num_lf0+hp.num_mgc))
-        world_wsr.set_shape((None, hp.num_bap+hp.num_lf0+hp.num_mgc))
+        world.set_shape((None, hp.num_bap+hp.num_lf0+hp.num_mgc+hp.num_vuv))
+        world_wsr.set_shape((None, hp.num_bap+hp.num_lf0+hp.num_mgc+hp.num_vuv))
         # Batching
         _, (texts, worlds,worlds_wsr, fnames) = tf.contrib.training.bucket_by_sequence_length(
                                             input_length=text_length,

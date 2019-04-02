@@ -33,7 +33,7 @@ import soundfile as sf
 def wav2world(wavfile,frame_period):
 	wav, fs = sf.read(wavfile)
 	fs = hp.sample_rate
-	print('use harvest:',hp.use_harvest)
+	print('use harvest:',hp.use_harvest,wav.shape)
 	if hp.use_harvest:
 		f0, timeaxis = pyworld.harvest(wav, fs, frame_period=hp.frame_period)
 	else:

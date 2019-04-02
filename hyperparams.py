@@ -22,17 +22,15 @@ class Hyperparams:
 
     #world features
     r = 8 # Reduction factor. Do not change this.
-    num_bap = 5
-    num_lf0 = 1
-    num_mgc = 60
-    mcep_alpha=0.77 #0.58(16k) 0.65(22050) 0.76(44100)  0.77(48k)
-    lf0_min= 0.0
-    lf0_max= 7
-    mgc_min= -9
-    mgc_max=  8
-    bap_min= -63
-    bap_max = 0
-    speed = 1
+    num_mgc = 60,
+    num_lf0 = 1,
+    num_vuv = 1,
+    num_bap = 5, # 1(16KHz, 22050Hz), 5(44.1KHz, 48KHz)
+    frame_period = 8, #15ms
+    sample_rate = 48000, #22050 Hz (corresponding to ljspeech dataset)
+    use_harvest = False, 
+    rescale_max = 0.999, #Rescaling value
+    trim_silence = True, #Whether to clip silence in Audio (at beginning and end of audio only, not the middle)
     frame_period = 40
     frame_period_WSRN = frame_period/r # 5
     
@@ -56,7 +54,7 @@ class Hyperparams:
     attention_win_size = 3
 
     # data
-    data = "..\\Datasets\\TTS-Portuguese-Corpus"
+    data = "../TTS-Portuguese-Corpus"
     data_dir = os.path.join(data,'wavs/')
     # data = "/data/private/voice/kate"
     language = 'pt' # or 'eng'
@@ -77,7 +75,7 @@ class Hyperparams:
 
     # training scheme
     lr = 0.001 # Initial learning rate.
-    logdir = "..\\logdirs-text2world\\logdir\\LJ01"
-    sampledir = '..\\logdirs-text2world\\samples'
+    logdir = "../logdir/LJ01"
+    sampledir = '../logdirs-text2world/samples'
     B = 5 # batch size
     num_iterations =2000000

@@ -77,7 +77,8 @@ class Graph:
         if training:
             if num==1: # Text2World
                 # world L1 loss
-                self.loss_worlds = tf.reduce_mean(tf.abs(self.Y - self.worlds))
+                self.loss_worlds = tf.losses.mean_squared_error(self.Y,self.worlds)
+                #self.loss_worlds = tf.reduce_mean(tf.abs(self.Y - self.worlds))
 
                 # world binary divergence loss
                 #self.loss_bd1 = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(logits=self.Y_logits, labels=self.worlds))

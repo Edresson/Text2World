@@ -195,7 +195,7 @@ def AudioDec(R, training=True):
                         scope="C_{}".format(i)); i += 1
     # mel_hats
     logits = conv1d(tensor,
-                    filters=hp.num_bap+hp.num_lf0+hp.num_mgc,
+                    filters=hp.num_bap+hp.num_lf0+hp.num_mgc+hp.num_vuv,
                     size=1,
                     rate=1,
                     padding="CAUSAL",
@@ -263,7 +263,7 @@ def WSRN(Y, training=True):
                         scope="HC_{}".format(i)); i += 1
     # -> (B, T,hp.num_bap+hp.num_lf0+hp.num_mgc)
     tensor = conv1d(tensor,
-                    filters=hp.num_bap+hp.num_lf0+hp.num_mgc,
+                    filters=hp.num_bap+hp.num_lf0+hp.num_mgc+hp.num_vuv,
                     size=1,
                     rate=1,
                     dropout_rate=hp.dropout_rate,

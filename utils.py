@@ -34,11 +34,9 @@ def wav2world(wavfile,frame_period):
 	wav, fs = sf.read(wavfile)
 	fs = hp.sample_rate
 	print('use harvest:',hp.use_harvest,wav.shape)
-	if hp.use_harvest:
-		f0, timeaxis = pyworld.harvest(wav, fs, frame_period=hp.frame_period)
-	else:
-		f0, timeaxis = pyworld.dio(wav, fs, frame_period=hp.frame_period)
-		f0 = pyworld.stonemask(wav, f0, timeaxis, fs)
+	
+	f0, timeaxis = pyworld.dio(wav, fs, frame_period=hp.frame_period)
+	f0 = pyworld.stonemask(wav, f0, timeaxis, fs)
 
 	spectrogram = pyworld.cheaptrick(wav, f0, timeaxis, fs)
 	aperiodicity = pyworld.d4c(wav, f0, timeaxis, fs)

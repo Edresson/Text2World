@@ -59,9 +59,9 @@ def synthesize():
         # Generate wav files
         if not os.path.exists(hp.sampledir): os.makedirs(hp.sampledir)
         for i, world_tensor in enumerate(Y):
-            print("Working on file", i+1)
-            lf0,mgc,bap = tensor_to_world_features(world_tensor)
-            wav = world2wav(lf0, mgc, bap,hp.frame_period)
+            print("Working on file", i+1,' world max,min:',world_tensor.max(),world_tensor.min())
+            
+            wav = world2wav(world_tensor)
             sf.write(hp.sampledir + "/{}.wav".format(i+1), wav,hp.sr_dataset)
         
 

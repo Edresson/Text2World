@@ -45,7 +45,7 @@ def synthesize():
 
         # Feed Forward
         ## mel
-        Y = np.zeros((len(L), hp.max_T, hp.num_bap +hp.num_lf0+hp.num_mgc), np.float32)
+        Y = np.zeros((len(L), hp.max_T, hp.num_bap +hp.num_lf0+hp.num_mgc+hp.num_vuv), np.float32)
         prev_max_attentions = np.zeros((len(L),), np.int32)
         for j in tqdm(range(hp.max_T)):
             _gs, _Y, _max_attentions, _alignments = \

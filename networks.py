@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
-#/usr/bin/python2
+'''
+By kyubyong park. kbpark.linguist@gmail.com. 
+https://www.github.com/kyubyong/dc_tts
+'''
+
 from __future__ import print_function
 
 from hyperparams import Hyperparams as hp
@@ -68,10 +72,10 @@ def TextEnc(L, training=True):
 def AudioEnc(S, training=True):
     '''
     Args:
-      S: World features. (B, 8*T/r, num_lf0+num_mgc+num_bap)
+      S: melspectrogram. (B, T/r, n_mels)
 
     Returns
-      Q: Queries. (B, 8*T/r, d)
+      Q: Queries. (B, T/r, d)
     '''
     i = 1
     tensor = conv1d(S,
@@ -155,7 +159,7 @@ def AudioDec(R, training=True):
       R: [Context Vectors; Q]. (B, T/r, 2d)
 
     Returns:
-      Y: Word features predictions. (B, T/r, num_lf0+num_mgc+num_bap)
+      Y: Melspectrogram predictions. (B, T/r, n_mels)
     '''
 
     i = 1
@@ -194,17 +198,19 @@ def AudioDec(R, training=True):
                         training=training,
                         scope="C_{}".format(i)); i += 1
     # mel_hats
-    logits = conv1d(tensor,
-                    filters=hp.num_bap+hp.num_lf0+hp.num_mgc+hp.num_vuv,
-                    size=1,
-                    rate=1,
-                    padding="CAUSAL",
-                    dropout_rate=hp.dropout_rate,
-                    training=training,
-                    scope="C_{}".format(i)); i += 1
-    #Y = tf.nn.sigmoid(logits) # mel_hats
-    Y = tf.layers.Dense(units=hp.num_bap+hp.num_lf0+hp.num_mgc+hp.num_vuv, activation=None, name='projection_linear')(logits)
+    Y = conv1d(tensor,
+               filters=hp.n_mgc + hp.n_lf0 + hp.n_vuv + hp.n_bap,
+               size=1,
+               rate=1,
+               padding="CAUSAL",
+               activation_fn= None,
+               dropout_rate=hp.dropout_rate,
+               training=training,
+               scope="C_{}".format(i)); i += 1
+    logits = tf.nn.sigmoid(Y) # mel_hats
+
     return logits, Y
+
 
 def WSRN(Y, training=True):
     '''
@@ -278,13 +284,12 @@ def WSRN(Y, training=True):
                         activation_fn=tf.nn.relu,
                         training=training,
                         scope="C_{}".format(i)); i += 1
-    logits = conv1d(tensor,
+    Z = conv1d(tensor,
                size=1,
                rate=1,
                dropout_rate=hp.dropout_rate,
+               activation_fn= None,
                training=training,
                scope="C_{}".format(i))
-    #Z = tf.nn.sigmoid(logits)
-    Z = tf.layers.Dense(units=hp.num_bap+hp.num_lf0+hp.num_mgc+hp.num_vuv, activation=None, name='projection_linear')(logits)
-
+    logits = tf.nn.sigmoid(Z)
     return logits, Z

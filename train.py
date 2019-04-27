@@ -77,7 +77,7 @@ class Graph:
         if training:
             if num==1: # Text2World
                 # world L1 loss
-                self.loss_worlds = tf.losses.mean_squared_error(self.Y,self.worlds)
+                self.loss_worlds = tf.losses.mean_squared_error(self.worlds,self.Y)
                 #self.loss_worlds = tf.reduce_mean(tf.abs(self.Y - self.worlds))
 
                 # world binary divergence loss
@@ -90,7 +90,7 @@ class Graph:
                 self.mask_sum = tf.reduce_sum(self.attention_masks)
                 self.loss_att /= self.mask_sum
 
-##                # total loss
+                # total loss
                 self.loss = self.loss_worlds +self.loss_att #self.loss_bd1 +
 
                 tf.summary.scalar('train/loss_worlds', self.loss_worlds)
@@ -108,7 +108,7 @@ class Graph:
                 # total loss
                 self.loss = self.loss_WSR #+ self.loss_bd2
 
-                tf.summary.scalar('train/loss_mags', self.loss_WSR)
+                tf.summary.scalar('train/loss_world_SSRN', self.loss_WSR)
                 #tf.summary.scalar('train/loss_bd2', self.loss_bd2)
 
             # Training Scheme

@@ -94,7 +94,9 @@ def load_data(mode="train"):
                 lines = codecs.open(transcript, 'r', 'utf-8').readlines()
                 for line in lines[:3054]+lines[3074:]:
                     fname,text = line.strip().split("==")
-
+                    file_name = os.path.basename(fname)
+                    if int(file_name.split('-')[1].replace('.wav','')) >= 5655 and int(file_name.split('-')[1].replace('.wav',''))<=5674:
+				continue
                     fpath = os.path.join(hp.data, "wavs", fname.split('/')[1])
                     fpaths.append(fpath)
                     #print('Antes da normalizacao',text)

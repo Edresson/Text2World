@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-#/usr/bin/python2
 '''
 By kyubyong park. kbpark.linguist@gmail.com. 
 https://www.github.com/kyubyong/dc_tts
@@ -245,8 +244,3 @@ def conv1d_transpose(inputs,
         tensor = tf.layers.dropout(tensor, rate=dropout_rate, training=training)
 
     return tensor
-
-
-
-
-

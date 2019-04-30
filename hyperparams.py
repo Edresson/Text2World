@@ -75,8 +75,8 @@ class Hyperparams:
     vocab = "PE abcdefghijklmnopqrstuvwxyzçãàáâêéíóôõúû"#abcdefghijklmnopqrstuvwxyzçãõâôêíîúûñáéó.?" # P: Padding, E: EOS. #portuguese
     #portugues falta acento no a :"abcdefghijklmnopqrstuvwxyzçãõâôêíîúûñáéó.?"
     phoneme_vocab = "ˈoʧi.tulʊʤɪpaʒnsdk̃eɾvmzgɐ͂ɛxfbɣ,_ɔXqɲʃʎĩẽõhũŋcrɳ E"
-    max_N = 180 # Maximum number of characters. default:180
-    max_T = 3000 # Maximum number of world frames. default:210
+    max_N = 500 # Maximum number of characters. default:180
+    max_T = 4000 # Maximum number of world frames. default:210
 
     # training scheme
     lr = 0.001 # Initial learning rate.

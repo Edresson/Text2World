@@ -21,8 +21,5 @@ sample-5673. A cantora terá quatro meses para ensaiar seu canto
 sample-5674. Esse tema foi falado no congresso.
 sample-0.wav. O título de página solicitado contém carateres inválidos.
 sample-1.wav. O academicismo ou academismo designam, originalmente, o método de ensino artístico profissionalizante concebido, formalizado e ministrado pelas academias de arte europeias.
-sample-2.wav. Esse método estendeu sua influência sobre todo o mundo ocidental ao longo de vários séculos, desde sua origem na Itália em meados do século dezesseis, e teve um impacto em várias sociedades não ocidentais por conta das conquistas do colonialismo.
 sample-3.wav. No entanto, os termos não têm uma aplicação consistente entre a crítica especializada, e às vezes ele foi ampliado, e às vezes limitado ou transposto para outras áreas.
-sample-5.wav. O sucesso da proposta francesa a tornou um modelo para a fundação de inúmeras outras escolas de arte de nível superior em vários países, de grande importância para a evolução das correntes barroca, neoclássica e parte da romântica.
-sample-6.wav. Outros escritores preferem empregá-los para descrever um estilo particular, nascido nos círculos das academias ou por sua influência, também denominado arte acadêmica ou estilo acadêmico.
 sample-7.wav.  Finalmente, para muitos autores, se referem especialmente à arte produzida no âmbito das academias que funcionaram no século dezenove.

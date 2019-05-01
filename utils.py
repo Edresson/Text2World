@@ -296,6 +296,7 @@ def load_spectrograms(fpath):
 if __name__ == "__main__":
         #test extract features
         world_tensor = wav2world('../sample-3.wav',hp.frame_period)
+        print('World Features Shape:',world_tensor.shape)
         wav = world2wav(world_tensor,hp.frame_period)
         sf.write("../world-sintetizado.wav", wav,hp.sample_rate)
         

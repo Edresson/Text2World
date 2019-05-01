@@ -30,7 +30,7 @@ class Hyperparams:
     n_vuv = 1
     n_bap = 5 # 1(16KHz, 22050Hz), 5(44.1KHz, 48KHz)
     
-    frame_period = 30 #15ms
+    frame_period = 30 # testar 50, para 10 segundos da ~210 
     sample_rate = 22050#22050 Hz (corresponding to ljspeech dataset)
     use_harvest = False 
     rescale_max = 0.999 #Rescaling value
@@ -75,7 +75,7 @@ class Hyperparams:
     #portugues falta acento no a :"abcdefghijklmnopqrstuvwxyzçãõâôêíîúûñáéó.?"
     phoneme_vocab = "ˈoʧi.tulʊʤɪpaʒnsdk̃eɾvmzgɐ͂ɛxfbɣ,_ɔXqɲʃʎĩẽõhũŋcrɳ E"
     max_N = 500 # Maximum number of characters. default:180
-    max_T = 1800# Maximum number of world frames. default:210 # para 50s: 1800 , para 10 segundos 350
+    max_T = 1800# Maximum number of world frames. default:210 # para 50s: 1800 , para 10 segundos 350 
 
     # training scheme
     lr = 0.001 # Initial learning rate.

@@ -75,7 +75,7 @@ class Hyperparams:
     #portugues falta acento no a :"abcdefghijklmnopqrstuvwxyzçãõâôêíîúûñáéó.?"
     phoneme_vocab = "ˈoʧi.tulʊʤɪpaʒnsdk̃eɾvmzgɐ͂ɛxfbɣ,_ɔXqɲʃʎĩẽõhũŋcrɳ E"
     max_N = 500 # Maximum number of characters. default:180
-    max_T = 4000 # Maximum number of world frames. default:210 # 3000
+    max_T = 1800# Maximum number of world frames. default:210 # para 50s: 1800 , para 10 segundos 350
 
     # training scheme
     lr = 0.001 # Initial learning rate.

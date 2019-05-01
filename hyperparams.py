@@ -7,7 +7,6 @@ class Hyperparams:
     
     # signal processing
     sr = 22050  # Sampling rate.
-    sr_dataset= 48000
     n_fft = 2048  # fft points (samples)
     frame_shift = 0.0125  # seconds
     frame_length = 0.05  # seconds
@@ -31,8 +30,8 @@ class Hyperparams:
     n_vuv = 1
     n_bap = 5 # 1(16KHz, 22050Hz), 5(44.1KHz, 48KHz)
     
-    frame_period = 12 #15ms
-    sample_rate = 48000#22050 Hz (corresponding to ljspeech dataset)
+    frame_period = 24 #15ms
+    sample_rate = 22050#22050 Hz (corresponding to ljspeech dataset)
     use_harvest = False 
     rescale_max = 0.999 #Rescaling value
     trim_silence = True #Whether to clip silence in Audio (at beginning and end of audio only, not the middle)
@@ -76,7 +75,7 @@ class Hyperparams:
     #portugues falta acento no a :"abcdefghijklmnopqrstuvwxyzçãõâôêíîúûñáéó.?"
     phoneme_vocab = "ˈoʧi.tulʊʤɪpaʒnsdk̃eɾvmzgɐ͂ɛxfbɣ,_ɔXqɲʃʎĩẽõhũŋcrɳ E"
     max_N = 500 # Maximum number of characters. default:180
-    max_T = 4000 # Maximum number of world frames. default:210
+    max_T = 4000 # Maximum number of world frames. default:210 # 3000
 
     # training scheme
     lr = 0.001 # Initial learning rate.

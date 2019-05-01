@@ -21,6 +21,8 @@ from tqdm import tqdm
 from matplotlib import pyplot as plt
 from librosa import  display
 
+import soundfile as sf
+
 def synthesize():
     # Load data
     L = load_data("synthesize")
@@ -61,8 +63,8 @@ def synthesize():
         for i, world_tensor in enumerate(Y):
             print("Working on file", i+1,' world max,min:',world_tensor.max(),world_tensor.min())
             
-            wav = world2wav(world_tensor)
-            sf.write(hp.sampledir + "/{}.wav".format(i+1), wav,hp.sr_dataset)
+            wav = world2wav(world_tensor,hp.frame_period)
+            sf.write(hp.sampledir + "/{}.wav".format(i+1), wav,hp.sample_rate)
         
 
         '''# Get magnitude

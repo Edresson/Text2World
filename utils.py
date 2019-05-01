@@ -31,8 +31,7 @@ import soundfile as sf
 
     
 def wav2world(wavfile,frame_period):
-	wav, fs = sf.read(wavfile)
-	fs = hp.sample_rate
+	wav, fs = librosa.load(wavfile, sr=hp.sample_rate, dtype=np.float64)
 	if hp.use_harvest:
 		f0, timeaxis = pyworld.harvest(wav, fs, frame_period=hp.frame_period)
 	else:
@@ -59,7 +58,7 @@ def wav2world(wavfile,frame_period):
 	return features.astype(np.float32)
 
 
-def world2wav(feature):
+def world2wav(feature,frame_period):
 	hparams = hp
 	mgc_idx = 0
 	lf0_idx = mgc_idx + hparams.num_mgc
@@ -87,7 +86,7 @@ def world2wav(feature):
 	return pyworld.synthesize(f0.flatten().astype(np.float64),
 				spectrogram.astype(np.float64),
 				aperiodicity.astype(np.float64),
-				fs, hparams.frame_period)
+				fs, frame_period)
 
 
 def texts_to_phonemes(fpaths,texts,outputfile='texts-phoneme.csv',alphabet=False):
@@ -294,3 +293,9 @@ def load_spectrograms(fpath):
     mel = mel[::hp.r, :]
     return fname, mel
 
+if __name__ == "__main__":
+        #test extract features
+        '''world_tensor = wav2world('sample-3.wav',hp.frame_period)
+        wav = world2wav(world_tensor,hp.frame_period)
+        sf.write("world-sintetizado.wav", wav,hp.sample_rate)'''
+        

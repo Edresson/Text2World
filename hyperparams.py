@@ -24,11 +24,11 @@ class Hyperparams:
     num_mgc = 60
     num_lf0 = 1
     num_vuv = 1
-    num_bap = 5 # 1(16KHz, 22050Hz), 5(44.1KHz, 48KHz)
+    num_bap = 2 # 1(16KHz, 22050Hz), 5(44.1KHz, 48KHz)
     n_mgc = 60
     n_lf0 = 1
     n_vuv = 1
-    n_bap = 5 # 1(16KHz, 22050Hz), 5(44.1KHz, 48KHz)
+    n_bap = 2 # 1(16KHz, 22050Hz), 5(44.1KHz, 48KHz)
     
     frame_period = 30 # testar 50, para 10 segundos da ~210 
     sample_rate = 22050#22050 Hz (corresponding to ljspeech dataset)

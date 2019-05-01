@@ -58,7 +58,7 @@ if hp.phoneme == True:
     if hp.language =='pt':
         texts_to_phonemes(fpaths,texts)
 
-for fpath in tqdm.tqdm(fpaths):
+for fpath in fpaths:#for fpath in tqdm.tqdm(fpaths):
     try:    
         if not os.path.exists("worlds"): os.mkdir("worlds")
         if not os.path.exists("worlds_wsr"): os.mkdir("worlds_wsr")

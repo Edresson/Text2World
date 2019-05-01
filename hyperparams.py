@@ -20,7 +20,7 @@ class Hyperparams:
     ref_db = 20
 
     #world features
-    r = 4 # Reduction factor. Do not change this.
+    r = 6 # Reduction factor. Do not change this.
     num_mgc = 60
     num_lf0 = 1
     num_vuv = 1

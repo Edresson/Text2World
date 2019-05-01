@@ -30,7 +30,7 @@ class Hyperparams:
     n_vuv = 1
     n_bap = 5 # 1(16KHz, 22050Hz), 5(44.1KHz, 48KHz)
     
-    frame_period = 24 #15ms
+    frame_period = 28 #15ms
     sample_rate = 22050#22050 Hz (corresponding to ljspeech dataset)
     use_harvest = False 
     rescale_max = 0.999 #Rescaling value

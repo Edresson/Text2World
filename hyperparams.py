@@ -30,7 +30,8 @@ class Hyperparams:
     n_vuv = 1
     n_bap = 2 # 1(16KHz, 22050Hz), 5(44.1KHz, 48KHz)
     
-    frame_period = 30 # testar 50, para 10 segundos da ~210 
+    #frame_period = 30 # 10 s ~350
+    frame_period = 50 # testar 50, para 10 segundos da ~210
     sample_rate = 22050#22050 Hz (corresponding to ljspeech dataset)
     use_harvest = False 
     rescale_max = 0.999 #Rescaling value
@@ -74,8 +75,10 @@ class Hyperparams:
     vocab = "PE abcdefghijklmnopqrstuvwxyzçãàáâêéíóôõúû"#abcdefghijklmnopqrstuvwxyzçãõâôêíîúûñáéó.?" # P: Padding, E: EOS. #portuguese
     #portugues falta acento no a :"abcdefghijklmnopqrstuvwxyzçãõâôêíîúûñáéó.?"
     phoneme_vocab = "ˈoʧi.tulʊʤɪpaʒnsdk̃eɾvmzgɐ͂ɛxfbɣ,_ɔXqɲʃʎĩẽõhũŋcrɳ E"
-    max_N = 500 # Maximum number of characters. default:180
-    max_T = 1800# Maximum number of world frames. default:210 # para 50s: 1800 , para 10 segundos 350 
+    #max_N = 500 # Maximum number of characters. default:180 Para o maximo no TTS-Portuguese Corpus
+    max_N = 180 # Maximum number of characters default.
+    #max_T = 1800# Maximum number of world frames. #framperiod=30 --> para 50s: 1800 , para 10 segundos 350 
+    max_T = 210# Maximum number of world frames. #frameperiod=50 para 50s: 1050, para 10 segundos 210
 
     # training scheme
     lr = 0.001 # Initial learning rate.

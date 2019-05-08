@@ -31,13 +31,13 @@ class Hyperparams:
     n_bap = 2 # 1(16KHz, 22050Hz), 5(44.1KHz, 48KHz)
     
     #frame_period = 30 # 10 s ~350
-    frame_period = 50 # testar 50, para 10 segundos da ~210
+    frame_period = 48 # testar 50, para 10 segundos da ~210
     sample_rate = 22050#22050 Hz (corresponding to ljspeech dataset)
     use_harvest = False 
     rescale_max = 0.999 #Rescaling value
     trim_silence = True #Whether to clip silence in Audio (at beginning and end of audio only, not the middle)
     #frame_period = 40
-    frame_period_WSRN = frame_period/r # 5
+    frame_period_WSRN = frame_period/r # 48/6=8
     
     f0_floor = 71.0
     f0_ceil = 800.0

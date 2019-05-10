@@ -238,10 +238,11 @@ def WSRN(Y, training=True):
                       dropout_rate=hp.dropout_rate,
                       training=training,
                       scope="HC_{}".format(i)); i += 1
-    for _ in range(3):
+    for _ in range(2):
         # -> (B, T/2, c) -> (B, T, c)
         tensor = conv1d_transpose(tensor,
                                   scope="D_{}".format(i),
+                                  stride=3,
                                   dropout_rate=hp.dropout_rate,
                                   training=training,); i += 1
         for j in range(2):

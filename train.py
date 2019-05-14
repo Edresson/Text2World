@@ -65,7 +65,7 @@ class Graph:
                 self.Z_logits, self.Z = WSRN(self.worlds, training=training)
 
         if not training:
-            # During inference, the predicted melspectrogram values are fed.
+            # During inference, the predicted world values are fed.
             with tf.variable_scope("WSRN"):
                 self.Z_logits, self.Z = WSRN(self.Y, training=training)
 

@@ -50,7 +50,7 @@ class Hyperparams:
     bap_max = 0'''
 
     # Model
-    dropout_rate = 0.2 #0.05
+    dropout_rate = 0.05 #0.05
     vocoder = 'RTISI-LA' # or 
     #vocoder = 'griffin_lim'
     e = 128 # == embedding

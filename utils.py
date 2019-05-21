@@ -33,9 +33,9 @@ import soundfile as sf
 def wav2world(wavfile,frame_period):
 	wav, fs = librosa.load(wavfile, sr=hp.sample_rate, dtype=np.float64)
 	if hp.use_harvest:
-		f0, timeaxis = pyworld.harvest(wav, fs, frame_period=hp.frame_period)
+		f0, timeaxis = pyworld.harvest(wav, fs, frame_period=frame_period)
 	else:
-		f0, timeaxis = pyworld.dio(wav, fs, frame_period=hp.frame_period)
+		f0, timeaxis = pyworld.dio(wav, fs, frame_period=frame_period)
 		f0 = pyworld.stonemask(wav, f0, timeaxis, fs)
 
 	spectrogram = pyworld.cheaptrick(wav, f0, timeaxis, fs)

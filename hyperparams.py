@@ -20,7 +20,7 @@ class Hyperparams:
     ref_db = 20
 
     #world features
-    r = 6 # Reduction factor. Do not change this.
+    r = 8 # Reduction factor. Do not change this.
     num_mgc = 60
     num_lf0 = 1
     num_vuv = 1
@@ -37,7 +37,7 @@ class Hyperparams:
     rescale_max = 0.999 #Rescaling value
     trim_silence = True #Whether to clip silence in Audio (at beginning and end of audio only, not the middle)
     #frame_period = 40
-    frame_period_WSRN = frame_period/r # 48/6=8
+    frame_period_WSRN = frame_period/r # 48/8= 6
     
     f0_floor = 71.0
     f0_ceil = 800.0
